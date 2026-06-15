@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-openai
+langchain-groq
+chromadb
+faiss-cpu
+streamlit
+pypdf
+openai
+groq
+sentence-transformers
+python-dotenv
+torchvision
