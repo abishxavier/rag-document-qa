@@ -53,7 +53,8 @@ def build_qa_chain(vectorstore, api_key=None):
     effective_api_key = api_key or os.environ.get("GROQ_API_KEY")
     if not effective_api_key:
         raise ValueError("GROQ_API_KEY is not configured. Please provide an API key.")
-    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=effective_api_key)
+    model_name = os.environ.get("GROQ_MODEL", "qwen/qwen3.8-27b")
+    llm = ChatGroq(model=model_name, temperature=0, api_key=effective_api_key)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
     # Prompt to rephrase follow-up questions using chat history

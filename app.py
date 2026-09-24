@@ -326,7 +326,7 @@ with st.sidebar:
             <div class="glass-card">
                 <span class="pill-badge pill-badge-amber">○ Awaiting Document</span>
                 <div style="font-size: 0.82rem; color: #475569; margin-top: 0.3rem;">
-                    Upload a PDF to vectorize and query with Llama 3.3-70B.
+                    Upload a PDF to vectorize and query with Groq LPUs.
                 </div>
             </div>
             """,
@@ -337,7 +337,7 @@ with st.sidebar:
     st.markdown(
         """
         <div style="font-size: 0.72rem; color: #64748B; line-height: 1.5; margin-top: 1rem;">
-            <b>Architecture</b>: ChromaDB • HuggingFace Embeddings (all-MiniLM-L6-v2) • Llama-3.3-70B via Groq LPUs
+            <b>Architecture</b>: ChromaDB • HuggingFace Embeddings (all-MiniLM-L6-v2) • Groq LPU Inference
         </div>
         """,
         unsafe_allow_html=True
@@ -353,7 +353,7 @@ with col_badges:
     st.markdown(
         """
         <div style="text-align: right; padding-top: 0.5rem;">
-            <span class="pill-badge">Llama 3.3-70B</span>
+            <span class="pill-badge">Groq LPUs</span>
             <span class="pill-badge">ChromaDB</span>
             <span class="pill-badge">LangChain</span>
         </div>
