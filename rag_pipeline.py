@@ -9,7 +9,6 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 import tempfile, os
 from dotenv import load_dotenv
-from openai import api_key
 
 load_dotenv()
 
@@ -30,17 +29,28 @@ def process_pdf(uploaded_file):
     return chunks
 
 
+_embeddings = None
+
+def get_embeddings():
+    global _embeddings
+    if _embeddings is None:
+        _embeddings = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
+    return _embeddings
+
+
 def build_vectorstore(chunks):
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    embeddings = get_embeddings()
     vectorstore = Chroma.from_documents(chunks, embedding=embeddings)
     return vectorstore
 
 
-def build_qa_chain(vectorstore):
-    api_key = os.environ.get("GROQ_API_KEY")
-    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=api_key)
+def build_qa_chain(vectorstore, api_key=None):
+    effective_api_key = api_key or os.environ.get("GROQ_API_KEY")
+    if not effective_api_key:
+        raise ValueError("GROQ_API_KEY is not configured. Please provide an API key.")
+    llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0, api_key=effective_api_key)
     retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
     # Prompt to rephrase follow-up questions using chat history

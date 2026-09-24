@@ -7,3 +7,6 @@ chroma_db/
 dist/
 build/
 .DS_Store
+.playwright-mcp/
+sample_apollo.pdf
+test_sample.pdf
